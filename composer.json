@@ -1,0 +1,28 @@
+{
+    "name": "demoniqus/entity-processor-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antipov Dmitry",
+            "email": "demoniqus@mail.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Demoniqus\\EntityProcessor\\": "src/",
+            "Demoniqus\\EntityProcessor\\Tests\\": "tests/"
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [],
+    "require-dev": {
+    }
+}

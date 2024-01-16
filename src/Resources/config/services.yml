@@ -1,0 +1,41 @@
+# shared используется только для saver'ов, т.к. они могут образовывать как естественные цепочки, так и разработчик
+# может создавать свои цепочки saver'ов. И требуется, чтобы естественные цепочки не знали ничего о настроенных
+# разработчиком.
+# Remover'ы же имеют исключительно естественные цепочки, когда при удалении той же сметы должны удаляться и ее
+# выполнения. ИНые виды цепочек для remover'ов бессмысленны.
+#
+#
+#
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Demoniqus\Factory\EntitySaverFactory:
+    public: true
+
+  Demoniqus\Factory\DtoCreatorFactory:
+    public: true
+
+  Demoniqus\Factory\EntityRemoverFactory:
+    public: true
+
+  Demoniqus\Interfaces\EntityRemoverFactoryInterface: '@Demoniqus\Factory\EntityRemoverFactory'
+  Demoniqus\Interfaces\EntitySaverFactoryInterface: '@Demoniqus\Factory\EntitySaverFactory'
+  Demoniqus\Interfaces\DtoCreatorFactoryInterface: '@Demoniqus\Factory\DtoCreatorFactory'
+  Demoniqus\Interfaces\DelOpManagerInterface: '@Demoniqus\Manager\UIDDelOpManager' #фиксируем manager, который будет обрабатывать в системе операции удаления
+#  Demoniqus\ChangesDetector\FloatComparator: ~
+
+  budget.changes.detector:
+    class: Demoniqus\ChangesDetector\ChangesDetector
+    public: true
+    arguments:
+      $entityClass: 'IncomeBudgetBundle\Entity\BudgetItemData'
+      $dtoClass: 'IncomeBudgetBundle\Dto\BudgetItemDto'
+      $ignoredProperties: [ 'updatedAt', 'createdAt', 'updatedBy', 'createdBy' ]
+      $comparators:
+#        !php/const Demoniqus\ChangesDetector\ChangesDetector::FLOAT_COMPARATOR: '@Demoniqus\ChangesDetector\FloatComparator'
+#        !php/const Demoniqus\ChangesDetector\ChangesDetector::BOOL_COMPARATOR: !service { class: Demoniqus\ChangesDetector\BoolComparator }
+#      $dtoMapping: [ { entity: children, dto: child },  ]
+
