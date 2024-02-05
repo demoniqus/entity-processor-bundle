@@ -43,14 +43,7 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
 //endregion Fields
 
 //region SECTION: Constructor
-    public function __construct(
-        EntitySaverFactoryInterface $entitySaverFactory,
-        EntityRemoverFactoryInterface $entityRemoverFactory,
-        DtoCreatorFactoryInterface $dtoCreatorFactory
-    )
-    {
-        parent::__construct($entitySaverFactory, $entityRemoverFactory, $dtoCreatorFactory);
-    }
+
 //endregion Constructor
 
 //region SECTION: Protected

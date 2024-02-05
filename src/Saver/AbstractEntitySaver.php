@@ -58,7 +58,6 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
         'entityIntegrity' => [],
         'dataIntegrity' => [],
     ];
-
     //endregion Fields
 
     //region SECTION: Constructor
@@ -130,16 +129,6 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
 	abstract protected function isUpdating(
 		EntityInterface $entity
 	): bool;
-//	{
-//		$uow = $this->entityManager->getUnitOfWork();
-//		$setAsCreated = false;
-//		if ($uow->isScheduledForInsert($entity)) {
-//			$setAsCreated = true;
-//		}
-//		else if ($uow->isScheduledForUpdate($entity))  {
-//			$saverResultData->setEntityAsUpdated($entity, $entityClassName);
-//		}
-//	}
 
     /**
      * Метод обеспечивает перенос обновленных данных из Dto в сущность
@@ -171,11 +160,6 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
     ): bool;
 
 	abstract protected function persist(EntityInterface $entity): void;
-//	{
-//		if (!$this->entityManager->contains($entity)) {
-//			$this->entityManager->persist($entity);
-//		}
-//	}
 
 	/**
 	 * @param EntityInterface                             $entity
@@ -183,11 +167,7 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
 	 * @return array
 	 */
 	abstract protected function detectEntityChanges(EntityInterface $entity, PreserveEntityProcessingResultDataInterface $saverResultData): array;
-//    {
-//        $className = $entity instanceof Proxy ? ClassUtils::getRealClass(get_class($entity)) : get_class($entity);
-//
-//        return array ($className, $this->getClearedEntityChanges($entity));
-//    }
+
     //endregion Protected
 
     //region SECTION: Private
@@ -369,7 +349,6 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
 
         return $entity;
     }
-
 
 	/**
 	 * @param array $entities

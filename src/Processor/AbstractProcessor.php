@@ -158,15 +158,15 @@ abstract class AbstractProcessor
 
     /**
      * @param Throwable                                                                       $ex
-     * @param PreserveEntityProcessingResultDataInterface|EntityProcessingResultDataInterface $saverResultData
+     * @param PreserveEntityProcessingResultDataInterface|EntityProcessingResultDataInterface $processorResultData
      * @param EntityProcessorMetadataInterface                                                $processorMetadata
      * @return EntityProcessingResultDataInterface
      * @throws Throwable
      */
     protected function processException(
-        Throwable $ex,
-        PreserveEntityProcessingResultDataInterface $saverResultData,
-        EntityProcessorMetadataInterface $processorMetadata
+        Throwable                                   $ex,
+        PreserveEntityProcessingResultDataInterface $processorResultData,
+        EntityProcessorMetadataInterface            $processorMetadata
     ): EntityProcessingResultDataInterface
     {
         if ($processorMetadata->isTransacted(true)) {
@@ -177,10 +177,10 @@ abstract class AbstractProcessor
          */
         if ($ex instanceof EntityProcessorException) {
             if ($ex->getMessage()) {
-                $saverResultData->addError($ex->getMessage());
+                $processorResultData->addError($ex->getMessage());
             }
 
-            return $saverResultData->finalize();
+            return $processorResultData->finalize();
         }
 
         /**
@@ -216,8 +216,6 @@ abstract class AbstractProcessor
 
         return $processingResultData->finalize();
     }
-
-
 
     /**
      * @param AbstractProcessor $processor
@@ -280,9 +278,6 @@ abstract class AbstractProcessor
 	abstract protected function flush(): void;
 
 	abstract protected function findEntity(?int $id): ?EntityInterface;
-//	function a() {
-//		$this->entityManager->getRepository()->find($id);
-//	}
 //endregion Protected
 
 //region SECTION: Public
