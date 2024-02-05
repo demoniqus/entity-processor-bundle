@@ -12,17 +12,17 @@ services:
     autoconfigure: true
     public: false
 
-  Demoniqus\Factory\EntitySaverFactory:
+  Demoniqus\EntityProcessor\Factory\EntitySaverFactory:
     public: true
 
-  Demoniqus\Factory\DtoCreatorFactory:
+  Demoniqus\EntityProcessor\Factory\DtoCreatorFactory:
     public: true
 
-  Demoniqus\Factory\EntityRemoverFactory:
+  Demoniqus\EntityProcessor\Factory\EntityRemoverFactory:
     public: true
 
-  Demoniqus\Interfaces\EntityRemoverFactoryInterface: '@Demoniqus\Factory\EntityRemoverFactory'
-  Demoniqus\Interfaces\EntitySaverFactoryInterface: '@Demoniqus\Factory\EntitySaverFactory'
-  Demoniqus\Interfaces\DtoCreatorFactoryInterface: '@Demoniqus\Factory\DtoCreatorFactory'
+  Demoniqus\EntityProcessor\Interfaces\EntityRemoverFactoryInterface: '@Demoniqus\EntityProcessor\Factory\EntityRemoverFactory'
+  Demoniqus\EntityProcessor\Interfaces\EntitySaverFactoryInterface: '@Demoniqus\EntityProcessor\Factory\EntitySaverFactory'
+  Demoniqus\EntityProcessor\Interfaces\DtoCreatorFactoryInterface: '@Demoniqus\EntityProcessor\Factory\DtoCreatorFactory'
 
 
