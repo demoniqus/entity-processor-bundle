@@ -35,9 +35,9 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
 {
 //region SECTION: Fields
     private array $validators = [
-        'beforeDelete' => [],
-        'afterDelete' => [],
-        'dataIntegrity' => [],
+        self::VALIDATOR_CATEGORY_BEFORE_DELETE => [],
+        self::VALIDATOR_CATEGORY_AFTER_DELETE => [],
+        self::VALIDATOR_CATEGORY_DATA_INTEGRITY => [],
     ];
 
 //endregion Fields
@@ -72,7 +72,7 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
     final private function validateBeforeDelete(EntityInterface $entity, ErrorSubscriberInterface $errorSubscriber): bool
     {
         /** @var EntityValidatorInterface $validator */
-        foreach ($this->validators['entity'] as $validator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_BEFORE_DELETE] as $validator) {
             $validator->addErrorSubscriber($errorSubscriber);
             $validator->validateEntity($entity, null, $errorSubscriber->getOptions());
             $validator->rejectErrorSubscriber($errorSubscriber);
@@ -88,7 +88,7 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
     final private function validateAfterDelete(EntityInterface $entity, ErrorSubscriberInterface $errorSubscriber): bool
     {
         /** @var EntityIntegrityValidatorInterface $validator */
-        foreach ($this->validators['entityIntegrity'] as $validator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_AFTER_DELETE] as $validator) {
             $validator->addErrorSubscriber($errorSubscriber);
             $validator->validateEntityIntegrity($entity, null, $errorSubscriber->getOptions());
             $validator->rejectErrorSubscriber($errorSubscriber);
@@ -104,7 +104,7 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
     final private function validateDataIntegrity(array $entitiesSet, ErrorSubscriberInterface $errorSubscriber): bool
     {
         /** @var DataIntegrityValidatorInterface $validator */
-        foreach ($this->validators['dataIntegrity'] as $validator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_DATA_INTEGRITY] as $validator) {
             $validator->addErrorSubscriber($errorSubscriber);
             $validator->validateData($entitiesSet, null, $errorSubscriber->getOptions());
             $validator->rejectErrorSubscriber($errorSubscriber);
@@ -313,13 +313,13 @@ abstract class AbstractEntityRemover extends AbstractProcessor implements Entity
                 throw new EntityProcessorException('Недопустимый класс проверки данных. Обратитесь к разработчику.');
             }
             if ($validator instanceof EntityValidatorInterface) {
-                $this->validators['entity'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_BEFORE_DELETE][spl_object_hash($validator)] = $validator;
             }
             if ($validator instanceof EntityIntegrityValidatorInterface) {
-                $this->validators['entityIntegrity'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_AFTER_DELETE][spl_object_hash($validator)] = $validator;
             }
             if ($validator instanceof DataIntegrityValidatorInterface) {
-                $this->validators['data'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_DATA_INTEGRITY][spl_object_hash($validator)] = $validator;
             }
         }
     }

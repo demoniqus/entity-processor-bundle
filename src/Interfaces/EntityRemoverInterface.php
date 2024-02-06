@@ -7,7 +7,9 @@ namespace Demoniqus\EntityProcessor\Interfaces;
 interface EntityRemoverInterface extends EntityProcessorInterface
 {
 //region SECTION: Fields
-    const DELETE_OPERATION = 'deleteOperation';
+    const VALIDATOR_CATEGORY_BEFORE_DELETE = 'beforeDelete';
+    const VALIDATOR_CATEGORY_AFTER_DELETE = 'afterDelete';
+    const VALIDATOR_CATEGORY_DATA_INTEGRITY = 'dataIntegrity';
 //endregion Fields
 //region SECTION:Public
     function delete(

@@ -53,11 +53,13 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
      * @var ValidatorInterface[]
      */
     private array $validators = [
-        'dto' => [],
-        'entity' => [],
-        'entityIntegrity' => [],
-        'dataIntegrity' => [],
+        self::VALIDATOR_CATEGORY_DTO => [],
+        self::VALIDATOR_CATEGORY_ENTITY => [],
+        self::VALIDATOR_CATEGORY_ENTITY_INTEGRITY => [],
+        self::VALIDATOR_CATEGORY_DATA_INTEGRITY => [],
     ];
+
+
     //endregion Fields
 
     //region SECTION: Constructor
@@ -185,7 +187,7 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
             return true;
         }
         /** @var DtoValidatorInterface $dtoValidator */
-        foreach ($this->validators['dto'] as $dtoValidator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_DTO] as $dtoValidator) {
             $dtoValidator->addErrorSubscriber($errorSubscriber);
             $dtoValidator->validateDto($dto, $errorSubscriber->getOptions());
             $dtoValidator->rejectErrorSubscriber($errorSubscriber);
@@ -210,7 +212,7 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
             return true;
         }
         /** @var EntityValidatorInterface $entityValidator */
-        foreach ($this->validators['entity'] as $entityValidator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_ENTITY] as $entityValidator) {
             $entityValidator->addErrorSubscriber($errorSubscriber);
             $entityValidator->validateEntity($entity, $dto, $errorSubscriber->getOptions());
             $entityValidator->rejectErrorSubscriber($errorSubscriber);
@@ -231,7 +233,7 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
     final private function validateEntityIntegrity(EntityInterface $entity, DtoInterface $dto, ErrorSubscriberInterface $errorSubscriber): bool
     {
         /** @var EntityIntegrityValidatorInterface $entityIntegrityValidator */
-        foreach ($this->validators['entityIntegrity'] as $entityIntegrityValidator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_ENTITY_INTEGRITY] as $entityIntegrityValidator) {
             $entityIntegrityValidator->addErrorSubscriber($errorSubscriber);
             $entityIntegrityValidator->validateEntityIntegrity($entity, $dto, $errorSubscriber->getOptions());
             $entityIntegrityValidator->rejectErrorSubscriber($errorSubscriber);
@@ -251,7 +253,7 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
     final private function validateDataIntegrity(array $entitiesSet, array $dtosSet, ErrorSubscriberInterface $errorSubscriber): bool
     {
         /** @var DataIntegrityValidatorInterface $dataIntegrityValidator */
-        foreach ($this->validators['dataIntegrity'] as $dataIntegrityValidator) {
+        foreach ($this->validators[self::VALIDATOR_CATEGORY_DATA_INTEGRITY] as $dataIntegrityValidator) {
             $dataIntegrityValidator->addErrorSubscriber($errorSubscriber);
             $dataIntegrityValidator->validateData($entitiesSet, $dtosSet, $errorSubscriber->getOptions());
             $dataIntegrityValidator->rejectErrorSubscriber($errorSubscriber);
@@ -505,16 +507,16 @@ abstract class AbstractEntitySaver extends AbstractProcessor implements EntitySa
                 throw new EntityProcessorException('Недопустимый класс проверки данных. Обратитесь к разработчику.');
             }
             if ($validator instanceof DtoValidatorInterface) {
-                $this->validators['dto'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_DTO][spl_object_hash($validator)] = $validator;
             }
             if ($validator instanceof EntityValidatorInterface) {
-                $this->validators['entity'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_ENTITY][spl_object_hash($validator)] = $validator;
             }
             if ($validator instanceof EntityIntegrityValidatorInterface) {
-                $this->validators['entityIntegrity'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_ENTITY_INTEGRITY][spl_object_hash($validator)] = $validator;
             }
             if ($validator instanceof DataIntegrityValidatorInterface) {
-                $this->validators['dataIntegrity'][spl_object_hash($validator)] = $validator;
+                $this->validators[self::VALIDATOR_CATEGORY_DATA_INTEGRITY][spl_object_hash($validator)] = $validator;
             }
         }
     }

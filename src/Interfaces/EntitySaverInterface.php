@@ -20,6 +20,11 @@ interface EntitySaverInterface extends UnsharedServiceInterface, EntityProcessor
      */
     const SKIP_DTO_VALIDATION = 'skipDtoValidation';
     const SKIP_ENTITY_VALIDATION = 'skipEntityValidation';
+
+	const VALIDATOR_CATEGORY_DTO = 'dto';
+	const VALIDATOR_CATEGORY_ENTITY = 'entity';
+	const VALIDATOR_CATEGORY_ENTITY_INTEGRITY = 'entityIntegrity';
+	const VALIDATOR_CATEGORY_DATA_INTEGRITY = 'dataIntegrity';
 //endregion Fields
 //region SECTION: Public
 //endregion Public
@@ -37,7 +42,7 @@ interface EntitySaverInterface extends UnsharedServiceInterface, EntityProcessor
      * @throws FinalRecalculationFailedException
      * @throws \Throwable
      */
-    public function save(
+    function save(
         DtoInterface $dto,
         ?ProcessorOptionsInterface $options = null,
         ?EntityProcessorMetadataInterface $processorMetadata = null
@@ -56,7 +61,7 @@ interface EntitySaverInterface extends UnsharedServiceInterface, EntityProcessor
      * @throws FinalRecalculationFailedException
      * @throws \Throwable
      */
-    public function saveSet(
+    function saveSet(
         array $dtos,
         ?ProcessorOptionsInterface $options = null,
         ?EntityProcessorMetadataInterface $processorMetadata = null
