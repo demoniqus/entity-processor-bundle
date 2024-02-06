@@ -145,7 +145,8 @@ abstract class AbstractProcessor
     final protected function processNextProcessorResult(
         EntityProcessorChainItemInterface $item,
         EntityProcessingResultDataInterface $nextProcessorResult,
-        PreserveEntityProcessingResultDataInterface $errorSubscriber): void
+        PreserveEntityProcessingResultDataInterface $errorSubscriber
+	): void
     {
         $errorSubscriber->inheritErrors($nextProcessorResult);
         if ($errorSubscriber->hasErrors()) {
