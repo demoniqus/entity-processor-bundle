@@ -26,7 +26,6 @@ final class EntityClassExtractor implements EntityClassExtractorInterface
 //region SECTION: Getters/Setters 
 	public function getClass(EntityInterface $entity): string
 	{
-		//Doctrine\Common\Util\ClassUtils::getRealClass(get_class($entity));
 		return get_class($entity);
 	}
 //endregion Getters/Setters

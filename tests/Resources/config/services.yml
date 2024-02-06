@@ -1,0 +1,21 @@
+# shared используется только для saver'ов, т.к. они могут образовывать как естественные цепочки, так и разработчик
+# может создавать свои цепочки saver'ов. И требуется, чтобы естественные цепочки не знали ничего о настроенных
+# разработчиком.
+# Remover'ы же имеют исключительно естественные цепочки, когда при удалении той же сметы должны удаляться и ее
+# выполнения. ИНые виды цепочек для remover'ов бессмысленны.
+#
+#
+#
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Demoniqus\EntityProcessor\Tests\Dummy\Utils\ServiceExtractor:
+    public: true
+
+  Demoniqus\EntityProcessor\Utils\EntityClassExtractor:
+    public: true
+
+
