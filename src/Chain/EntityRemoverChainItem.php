@@ -50,7 +50,8 @@ final class EntityRemoverChainItem extends AbstractEntityProcessorChainItem impl
         return $this->getEntitiesCallback->call($this->context ?? new class {}, $entity);
     }
 
-    public function getProcessor(): EntityRemoverInterface
+	/** @noinspection PhpRedundantMethodOverrideInspection */
+	public function getProcessor(): EntityRemoverInterface
     {
         return parent::getProcessor();
     }

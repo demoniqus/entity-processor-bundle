@@ -47,7 +47,8 @@ final class EntitySaverChainItem extends AbstractEntityProcessorChainItem implem
         return $this->getDtosCallback->call($this->context ?? new class {}, $dto, $entity);
     }
 
-    public function getProcessor(): EntitySaverInterface
+	/** @noinspection PhpRedundantMethodOverrideInspection */
+	public function getProcessor(): EntitySaverInterface
     {
         return parent::getProcessor();
     }

@@ -32,10 +32,7 @@ abstract class AbstractEntityProcessorChainItem implements EntityProcessorChainI
 //endregion Constructor
 
 //region SECTION: Protected
-    protected function getProcessor(): EntityProcessorInterface
-    {
-        return $this->processor;
-    }
+
 //endregion Protected
 
 //region SECTION: Public
@@ -44,6 +41,10 @@ abstract class AbstractEntityProcessorChainItem implements EntityProcessorChainI
         return $this->processor === $processor;
     }
 
+	public function getProcessor(): EntityProcessorInterface
+	{
+		return $this->processor;
+	}
 //endregion Public
 
 //region SECTION: Getters/Setters
