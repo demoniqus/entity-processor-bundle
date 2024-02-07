@@ -180,6 +180,9 @@ abstract class AbstractProcessor
             if ($ex->getMessage()) {
                 $processorResultData->addError($ex->getMessage());
             }
+			else {
+				$processorResultData->addError(get_class($ex));
+			}
 
             return $processorResultData->finalize();
         }
