@@ -24,7 +24,7 @@ trait ProcessingResultDataTrait
 //endregion Protected
 
 //region SECTION: Public
-    public function throw(?string $exceptionClassName = \Exception::class, ?string $glue = ', ')
+    public function throwIsWrong(?string $exceptionClassName = \Exception::class, ?string $glue = ', ')
     {
         if (!count($this->getErrors())) {
             return;

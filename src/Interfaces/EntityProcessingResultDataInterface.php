@@ -7,7 +7,7 @@ namespace Demoniqus\EntityProcessor\Interfaces;
 interface EntityProcessingResultDataInterface
 {
     //region SECTION:Public
-    public function throw(?string $exceptionClassName = \Exception::class, ?string $glue = ', ');
+    public function throwIsWrong(?string $exceptionClassName = \Exception::class, ?string $glue = ', ');
     //endregion Public
     //region SECTION: Getters/Setters
     public function getErrors(): array;
