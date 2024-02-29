@@ -18,6 +18,7 @@ use Demoniqus\EntityProcessor\Interfaces\DtoCreatorFactoryInterface;
 use Demoniqus\EntityProcessor\Interfaces\DtoInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessingResultDataInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessorChainItemInterface;
+use Demoniqus\EntityProcessor\Interfaces\EntityProcessorInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessorMetadataInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverFactoryInterface;
@@ -297,13 +298,13 @@ abstract class AbstractProcessor
     }
 
     /**
-     * @param AbstractProcessor $processor
+     * @param EntityProcessorInterface $processor
      * @param callable          $getProcessedItems
      * @param null              $context
      * @throws Exception
 	 * @noinspection PhpUnused
 	 */
-    public function setNext(AbstractProcessor $processor, callable $getProcessedItems, $context = null): void
+    public function setNext(EntityProcessorInterface $processor, callable $getProcessedItems, $context = null): void
     {
         if ($processor->prevProcessor) {
             $processor->prevProcessor->removeNext($processor);
@@ -318,7 +319,7 @@ abstract class AbstractProcessor
 //endregion Public
 //region SECTION: Getters/Setters
 
-    public function removeNext(AbstractProcessor $processor): void
+    public function removeNext(EntityProcessorInterface $processor): void
     {
         $processors = [];
 
