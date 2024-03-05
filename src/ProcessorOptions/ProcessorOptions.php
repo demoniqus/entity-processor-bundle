@@ -44,7 +44,11 @@ final class ProcessorOptions implements ProcessorOptionsInterface
     public function getOption(string $optionName, $object = null)
     {
         return $object ?
-            $this->options[$optionName][spl_object_hash($object)] ?? null :
+			(
+				is_string($object)?
+					$this->options[$optionName][$object] ?? null :
+					$this->options[$optionName][spl_object_hash($object)] ?? null
+			) :
             $this->options[$optionName] ?? null
             ;
     }

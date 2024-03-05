@@ -206,9 +206,17 @@ abstract class AbstractProcessor
         EntityProcessorMetadataInterface $processorMetadata
     ): EntityProcessingResultDataInterface
     {
-        if (!$processingResultData->hasErrors()) {
-            $this->flush();
-        }
+		if (
+			!$processingResultData->hasErrors() &&
+			(
+				$processingResultData->getOption(EntityProcessorInterface::AVOID_INTERMEDIATE_FIXING, $this) !== true ||
+				$processingResultData->getOption(EntityProcessorInterface::AVOID_INTERMEDIATE_FIXING, static::class) !== true ||
+				$processingResultData->getOption(EntityProcessorInterface::AVOID_INTERMEDIATE_FIXING) !== true ||
+				$processorMetadata->isTransacted(true)
+			)
+		) {
+			$this->flush();
+		}
         if ($processorMetadata->isTransacted(true)) {
             if (!$processingResultData->hasErrors()) {
                 $this->commit();

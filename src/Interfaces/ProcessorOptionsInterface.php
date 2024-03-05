@@ -20,8 +20,8 @@ interface ProcessorOptionsInterface
     function setOption(string $optionName, $value, $object = null): ProcessorOptionsInterface;
 
     /**
-     * @param string $optionName
-     * @param        $object
+     * @param string			 $optionName
+     * @param string|object|null $object
      * @return mixed
      */
     function getOption(string $optionName, $object = null);
