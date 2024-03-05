@@ -4,7 +4,7 @@
 namespace Demoniqus\EntityProcessor\Interfaces;
 
 
-interface EntityProcessorInterface
+interface EntityProcessorInterface extends UnsharedServiceInterface
 {
 //region SECTION: Fields
 	/**

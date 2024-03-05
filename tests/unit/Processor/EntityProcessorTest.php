@@ -15,8 +15,10 @@ use Demoniqus\EntityProcessor\Interfaces\Preserve\EntityProcessingResultDataInte
 use Demoniqus\EntityProcessor\ProcessingResultData\Preserve\ProcessingResultData as PreserveProcessingResultData;
 use Demoniqus\EntityProcessor\Processor\AbstractProcessor;
 use Demoniqus\EntityProcessor\Saver\AbstractEntitySaver;
+use Demoniqus\EntityProcessor\Tests\Dummy\Processor\Saver\TestSaver;
 use Demoniqus\EntityProcessor\Tests\WebTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EntityProcessorTest extends WebTestCase
 {
@@ -25,6 +27,8 @@ class EntityProcessorTest extends WebTestCase
 	 * @var MockObject|AbstractProcessor|(AbstractProcessor&MockObject)|null
 	 */
 	private ?MockObject $tested = null;
+
+	private ?ContainerInterface $container = null;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -45,6 +49,8 @@ class EntityProcessorTest extends WebTestCase
 			]
 
 		);
+
+		$this->container = $container;
 	}
 //endregion Protected
 
@@ -53,7 +59,17 @@ class EntityProcessorTest extends WebTestCase
 //endregion Private
 
 //region SECTION: Public
+	public function testUnsharedInterface()
+	{
+		$instance1 = $this->container->get(TestSaver::class);
+		$instance2 = $this->container->get(TestSaver::class);
 
+		$this->assertNotEquals(
+			spl_object_hash($instance1),
+			spl_object_hash($instance2),
+			'При каждом запросе сущностей с интерфейсом UnsharedServiceInterface контейнер должен возвращать новую реализацию.'
+		);
+	}
 
 	public function testProcessingNextProcessorResult()
 	{

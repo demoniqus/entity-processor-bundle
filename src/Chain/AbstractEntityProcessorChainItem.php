@@ -6,13 +6,12 @@ namespace Demoniqus\EntityProcessor\Chain;
 
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessorChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessorInterface;
-use Demoniqus\EntityProcessor\Processor\AbstractProcessor;
 use Demoniqus\EntityProcessor\Saver\AbstractEntitySaver;
 
 abstract class AbstractEntityProcessorChainItem implements EntityProcessorChainItemInterface
 {
 //region SECTION: Fields
-    private AbstractProcessor $processor;
+    private EntityProcessorInterface $processor;
     /**
      * context для getDtos или getEntities-функций
      */
@@ -24,7 +23,7 @@ abstract class AbstractEntityProcessorChainItem implements EntityProcessorChainI
      * @param AbstractEntitySaver $processor
      * @param                     $context
      */
-    public function __construct(AbstractProcessor $processor, $context)
+    public function __construct(EntityProcessorInterface $processor, $context)
     {
         $this->processor = $processor;
         $this->context = $context;
@@ -36,7 +35,7 @@ abstract class AbstractEntityProcessorChainItem implements EntityProcessorChainI
 //endregion Protected
 
 //region SECTION: Public
-    public function isProcessor(AbstractProcessor $processor): bool
+    public function isProcessor(EntityProcessorInterface $processor): bool
     {
         return $this->processor === $processor;
     }

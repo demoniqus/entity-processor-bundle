@@ -22,16 +22,16 @@ use Demoniqus\EntityProcessor\Interfaces\EntityProcessorInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityProcessorMetadataInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverFactoryInterface;
+use Demoniqus\EntityProcessor\Interfaces\EntityRemoverInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntitySaverChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntitySaverFactoryInterface;
+use Demoniqus\EntityProcessor\Interfaces\EntitySaverInterface;
 use Demoniqus\EntityProcessor\Interfaces\Preserve\EntityProcessingResultDataInterface as PreserveEntityProcessingResultDataInterface;
 use Demoniqus\EntityProcessor\Metadata\EntityProcessorMetadata;
-use Demoniqus\EntityProcessor\Remover\AbstractEntityRemover;
-use Demoniqus\EntityProcessor\Saver\AbstractEntitySaver;
 use Exception;
 use Throwable;
 
-abstract class AbstractProcessor
+abstract class AbstractProcessor implements EntityProcessorInterface
 {
 //region SECTION: Fields
     protected EntitySaverFactoryInterface $entitySaverFactory;
@@ -45,8 +45,6 @@ abstract class AbstractProcessor
     protected array $serviceFields = [];
 
     protected array $nextProcessors = [];
-
-    protected ?AbstractProcessor $prevProcessor = null;
 //endregion Fields
 
 //region SECTION: Constructor
@@ -231,18 +229,18 @@ abstract class AbstractProcessor
     }
 
     /**
-     * @param AbstractProcessor $processor
-     * @param callable          $getProcessedItems
-     * @param                   $context
+     * @param EntityProcessorInterface $processor
+     * @param callable          	   $getProcessedItems
+     * @param                   	   $context
      * @throws Exception
      */
-    final protected function createNextChainItem(AbstractProcessor $processor, callable $getProcessedItems, $context = null): void
+    final protected function createNextChainItem(EntityProcessorInterface $processor, callable $getProcessedItems, $context = null): void
     {
-        if ($processor instanceof AbstractEntityRemover) {
+        if ($processor instanceof EntityRemoverInterface) {
             $this->nextProcessors[] = new EntityRemoverChainItem($processor, $context, $getProcessedItems);
             return;
         }
-        if ($processor instanceof AbstractEntitySaver) {
+        if ($processor instanceof EntitySaverInterface) {
             $this->nextProcessors[] = new EntitySaverChainItem($processor, $context, $getProcessedItems);
             return;
         }
@@ -307,19 +305,13 @@ abstract class AbstractProcessor
 
     /**
      * @param EntityProcessorInterface $processor
-     * @param callable          $getProcessedItems
-     * @param null              $context
+     * @param callable          	   $getProcessedItems
+     * @param null              	   $context
      * @throws Exception
 	 * @noinspection PhpUnused
 	 */
     public function setNext(EntityProcessorInterface $processor, callable $getProcessedItems, $context = null): void
     {
-        if ($processor->prevProcessor) {
-            $processor->prevProcessor->removeNext($processor);
-        }
-
-        $processor->prevProcessor = $this;
-
         $this->createNextChainItem($processor, $getProcessedItems, $context);
     }
 

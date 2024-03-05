@@ -12,10 +12,19 @@ services:
     autoconfigure: true
     public: false
 
+  _instanceof:
+    Demoniqus\EntityProcessor\Interfaces\UnsharedServiceInterface:
+      shared: false
+
   Demoniqus\EntityProcessor\Tests\Dummy\Utils\ServiceExtractor:
     public: true
 
   Demoniqus\EntityProcessor\Utils\EntityClassExtractor:
     public: true
+
+  Demoniqus\EntityProcessor\Tests\Dummy\Processor\Saver\TestSaver:
+    public: true
+
+
 
 

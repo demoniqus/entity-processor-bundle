@@ -6,9 +6,9 @@ namespace Demoniqus\EntityProcessor\Chain;
 
 use Demoniqus\EntityProcessor\Interfaces\DtoInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityInterface;
+use Demoniqus\EntityProcessor\Interfaces\EntityProcessorInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntitySaverChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntitySaverInterface;
-use Demoniqus\EntityProcessor\Processor\AbstractProcessor;
 use Demoniqus\EntityProcessor\Saver\AbstractEntitySaver;
 
 final class EntitySaverChainItem extends AbstractEntityProcessorChainItem implements EntitySaverChainItemInterface
@@ -26,7 +26,7 @@ final class EntitySaverChainItem extends AbstractEntityProcessorChainItem implem
      * @param                                                        $context
      * @param callable(?DtoInterface, ?EntityInterface):DtoInterface[] $getDtos
      */
-    public function __construct(AbstractProcessor $processor, $context, callable $getDtos)
+    public function __construct(EntityProcessorInterface $processor, $context, callable $getDtos)
     {
         parent::__construct($processor, $context);
         $this->getDtosCallback = $getDtos;

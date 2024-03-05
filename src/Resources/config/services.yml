@@ -12,6 +12,10 @@ services:
     autoconfigure: true
     public: false
 
+  _instanceof:
+    Demoniqus\EntityProcessor\Interfaces\UnsharedServiceInterface:
+      shared: false
+
   Demoniqus\EntityProcessor\Factory\EntitySaverFactory:
     public: true
 

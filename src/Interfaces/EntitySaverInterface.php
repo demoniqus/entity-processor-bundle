@@ -11,7 +11,7 @@ use Demoniqus\EntityProcessor\Exception\EntityProcessorException;
 use Demoniqus\EntityProcessor\Exception\EntityIntegrityValidationFailedException;
 use Demoniqus\EntityProcessor\Exception\FinalRecalculationFailedException;
 
-interface EntitySaverInterface extends UnsharedServiceInterface, EntityProcessorInterface
+interface EntitySaverInterface extends EntityProcessorInterface
 {
 //region SECTION: Fields
     /**

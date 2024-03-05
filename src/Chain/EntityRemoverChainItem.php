@@ -5,9 +5,9 @@ namespace Demoniqus\EntityProcessor\Chain;
 
 
 use Demoniqus\EntityProcessor\Interfaces\EntityInterface;
+use Demoniqus\EntityProcessor\Interfaces\EntityProcessorInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverChainItemInterface;
 use Demoniqus\EntityProcessor\Interfaces\EntityRemoverInterface;
-use Demoniqus\EntityProcessor\Processor\AbstractProcessor;
 use Demoniqus\EntityProcessor\Remover\AbstractEntityRemover;
 
 final class EntityRemoverChainItem extends AbstractEntityProcessorChainItem implements EntityRemoverChainItemInterface
@@ -25,7 +25,7 @@ final class EntityRemoverChainItem extends AbstractEntityProcessorChainItem impl
      * @param                                             $context
      * @param callable(EntityInterface):EntityInterface[] $getEntities
      */
-    public function __construct(AbstractProcessor $processor, $context, callable $getEntities)
+    public function __construct(EntityProcessorInterface $processor, $context, callable $getEntities)
     {
         /**
          * Проверка типов $processor идет на уровне saver'ов и remover'ов, поэтому здесь нет смысла
